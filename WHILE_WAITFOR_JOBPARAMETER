@@ -1,1 +1,10 @@
+/******************************************************
+*
+* One example for 4 very common SQL-patterns:
+*   - WHILE LOOP
+*   - WAITFOR DELAY
+*   - Filter out weekends
+*   - Change Job Parameters
+*   
+********************************************************/
 
