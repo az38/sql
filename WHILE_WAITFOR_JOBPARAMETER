@@ -10,18 +10,25 @@
 
 DECLARE @StartDate DATE = '2021-05-01'
 DECLARE @EndDate DATE = '2021-01-01'
-DECLARE @cmd nvarchar(max) = N'C:\POWERSHELL\PowerBI\psTest.ps1 -ReportDate "' + FORMAT (@ReportDate, 'yyyy-MM-dd') + '" ';
+
+--lets start PowerShell script with executed job
+DECLARE @cmd nvarchar(max) = N'C:\POWERSHELL\PowerBI\psTest.ps1 -ReportDate "' + FORMAT (@StartDate, 'yyyy-MM-dd') + '" '; 
 
 WHILE (@StartDate >= @EndDate)
 
 BEGIN
 print @StartDate;
 
+-- set Monday as the first day of week
 SET DATEFIRST 1 
+
+-- filter out weekends
 if (datepart(WEEKDAY, @StartDate) < 6) 
-	BEGIN
-		--exec [DB].[sch].[spToExec] @ReportDate=@StartDate
-  EXEC msdb.dbo.sp_update_jobstep  
+BEGIN
+
+	SET @cmd nvarchar(max) = N'C:\POWERSHELL\PowerBI\psTest.ps1 -ReportDate "' + FORMAT (@StartDate, 'yyyy-MM-dd') + '" '; 
+	
+  	EXEC msdb.dbo.sp_update_jobstep  
 		@job_name = N'job.Test',  
 		@step_id = 1,  
 		@proxy_name=N'DOMAIN\userName',
