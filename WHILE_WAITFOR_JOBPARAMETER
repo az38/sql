@@ -36,6 +36,7 @@ BEGIN
 
 	EXEC msdb.dbo.sp_start_job N'job.Test';  
   
+  		-- give your job time to be executed before next step in the loop
 		WAITFOR DELAY '00:12:00';
 
 END
