@@ -1,0 +1,13 @@
+/*
+function to clean string - only numbers, spaces and A-Za-z symbols are allowed
+
+Usage
+
+SELECT fx_CleanString("--A1 ! Äa")
+  -- will be returned "A1  a"
+ 
+*/
+
+CREATE FUNCTION fx_CleanString(
+  @str nvarchar(max)
+)
