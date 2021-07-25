@@ -11,3 +11,25 @@ SELECT fx_CleanString("--A1 ! Äa")
 CREATE FUNCTION fx_CleanString(
   @str nvarchar(max)
 )
+RETURNS NVARCHAR(MAX)
+AS
+     BEGIN
+         DECLARE @i int= 1;
+		     DECLARE @symb nvarchar(1);
+         
+         WHILE @i <= DATALENGTH(@str)
+             BEGIN
+      				SET @symb = SUBSTRING(@str, @i, 1);
+                IF NOT( 
+                  ASCII(@symb) = 32 -- space
+                  or (ASCII(@symb) >= 48 and ASCII(@symb) < 58) --digits
+                  or (ASCII(@symb) >= 65 and ASCII(@symb) < 91) -- UPPERCASE letters
+                  or (ASCII(@symb) >= 97 and ASCII(@symb) < 123) -- LOWERCASE letters
+                )
+                BEGIN
+                  SET @str = REPLACE(@str, @symb, '')
+                END;
+               SET @i = @i + 1;
+             END;
+         RETURN @str;
+     END;
